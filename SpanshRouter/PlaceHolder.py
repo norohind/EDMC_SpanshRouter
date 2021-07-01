@@ -30,8 +30,8 @@ class PlaceHolder(Entry):
         self['fg'] = self.placeholder_color
 
     def set_default_style(self):
-        theme = config.getint('theme')
-        self['fg'] = config.get('dark_text') if theme else "black"
+        theme = config.get_int('theme')
+        self['fg'] = config.get_str('dark_text') if theme else "black"
 
     def set_error_style(self, error=True):
         if error:
