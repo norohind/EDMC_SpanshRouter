@@ -5,6 +5,14 @@ import sys
 import traceback
 import json
 
+import logging
+from config import appname
+
+# We need a name of plugin dir, not SpanshRouter.py dir
+plugin_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
+logger = logging.getLogger(f'{appname}.{plugin_name}')
+
+
 class SpanshUpdater():
     def __init__(self, version, plugin_dir):
         self.version = version
@@ -21,16 +29,16 @@ class SpanshUpdater():
             r = requests.get(url)
             if r.status_code == 200:
                 with open(self.zip_path, 'wb') as f:
-                    print("Downloading SpanshRouter to " + self.zip_path)
+                    logger.info(f"Downloading SpanshRouter to {self.zip_path}")
                     f.write(os.path.join(r.content))
                 self.zip_downloaded = True
             else:
-                sys.stderr.write("Failed to fetch SpanchRouter update. Status code: " + str(r.status_code))
+                logger.warning("Failed to fetch SpanchRouter update. Status code: " + str(r.status_code))
                 self.zip_downloaded = False
         except:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-            sys.stderr.write(''.join('!! ' + line for line in lines))
+            logger.warning(''.join('!! ' + line for line in lines))
             self.zip_downloaded = False
         finally:
             return self.zip_downloaded
@@ -45,9 +53,9 @@ class SpanshUpdater():
             except:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-                sys.stderr.write(''.join('!! ' + line for line in lines))
+                logger.warning(''.join('!! ' + line for line in lines))
         else:
-            sys.stderr.write("Error when downloading the latest SpanshRouter update")
+            logger.warning("Error when downloading the latest SpanshRouter update")
 
     def get_changelog(self):
         url = "https://api.github.com/repos/CMDR-Kiel42/EDMC_SpanshRouter/releases/latest"
@@ -63,4 +71,4 @@ class SpanshUpdater():
         except:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-            sys.stderr.write(''.join('!! ' + line for line in lines))
+            logger.warning(''.join('!! ' + line for line in lines))

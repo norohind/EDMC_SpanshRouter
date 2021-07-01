@@ -8,7 +8,14 @@ import sys
 from tkinter import *
 from SpanshRouter.PlaceHolder import PlaceHolder
 import queue 
-    
+
+import logging
+from config import appname
+
+# We need a name of plugin dir, not AutoCompleter.py dir
+plugin_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
+logger = logging.getLogger(f'{appname}.{plugin_name}')
+
 
 class AutoCompleter(PlaceHolder):
     def __init__(self, parent, placeholder, **kw):
@@ -160,7 +167,7 @@ class AutoCompleter(PlaceHolder):
             except:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-                sys.stderr.write(''.join('!! ' + line for line in lines))
+                logger.warning(''.join('!! ' + line for line in lines))
 
     def write(self, lista):
         self.queue.put(lista)
