@@ -1,26 +1,25 @@
-import os
-import sys
-import traceback
-import csv
-import subprocess
-import webbrowser
-import json
-import re
-import requests
-import io
 import ast
+import csv
+import io
+import json
+import logging
+import os
+import subprocess
+import tkinter as tk
+import tkinter.filedialog as filedialog
+import tkinter.messagebox as confirmDialog
+import traceback
+import webbrowser
 from time import sleep
+from tkinter import *
+
+import requests
+
+from config import appname
 from monitor import monitor
 from . import AutoCompleter
 from . import PlaceHolder
 from .updater import SpanshUpdater
-import tkinter as tk
-import tkinter.filedialog as filedialog
-import tkinter.messagebox as confirmDialog
-from tkinter import *
-
-import logging
-from config import appname
 
 # We need a name of plugin dir, not SpanshRouter.py dir
 plugin_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))

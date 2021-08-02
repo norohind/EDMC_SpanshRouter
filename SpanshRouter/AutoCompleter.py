@@ -1,15 +1,14 @@
-import threading
 import json
-import os
-import requests
-import traceback
-from time import sleep
-import sys
-from tkinter import *
-from SpanshRouter.PlaceHolder import PlaceHolder
-import queue 
-
 import logging
+import os
+import queue
+import threading
+import traceback
+from tkinter import *
+
+import requests
+from SpanshRouter.PlaceHolder import PlaceHolder
+
 from config import appname
 
 # We need a name of plugin dir, not AutoCompleter.py dir
@@ -47,25 +46,25 @@ class AutoCompleter(PlaceHolder):
         self.update_me()
 
     def ac_foc_out(self, event=None):
-        x,y = self.parent.winfo_pointerxy()
-        widget_under_cursor = self.parent.winfo_containing(x,y)
+        x, y = self.parent.winfo_pointerxy()
+        widget_under_cursor = self.parent.winfo_containing(x, y)
         if (widget_under_cursor != self.lb and widget_under_cursor != self) or event is None:
             self.foc_out()
             self.hide_list()
-    
+
     def show_menu(self, e):
         self.foc_in()
         w = e.widget
         self.menu.entryconfigure("Cut",
-            command=lambda: w.event_generate("<<Cut>>"))
+                                 command=lambda: w.event_generate("<<Cut>>"))
         self.menu.entryconfigure("Copy",
-            command=lambda: w.event_generate("<<Copy>>"))
+                                 command=lambda: w.event_generate("<<Copy>>"))
         self.menu.entryconfigure("Paste",
-            command=lambda: w.event_generate("<<Paste>>"))
+                                 command=lambda: w.event_generate("<<Paste>>"))
         self.menu.tk.call("tk_popup", self.menu, e.x_root, e.y_root)
 
     def keypressed(self, event):
-        key=event.keysym
+        key = event.keysym
         if key == 'Down':
             self.down(event.widget.widgetName)
         elif key == 'Up':
@@ -75,7 +74,7 @@ class AutoCompleter(PlaceHolder):
                 self.selection()
         elif key in ['Escape', 'Tab', 'ISO_Left_Tab'] and self.lb_up:
             self.hide_list()
-    
+
     def select_all(self, event):
         event.widget.event_generate('<<SelectAll>>')
 
@@ -87,7 +86,7 @@ class AutoCompleter(PlaceHolder):
         else:
             t = threading.Thread(target=self.query_systems, args=[value])
             t.start()
-        
+
     def selection(self, event=None):
         if self.lb_up:
             self.has_selected = True
@@ -104,12 +103,12 @@ class AutoCompleter(PlaceHolder):
                 index = '0'
             else:
                 index = self.lb.curselection()[0]
-            if index != '0':                
+            if index != '0':
                 self.lb.selection_clear(first=index)
-                index = str(int(index)-1)                
+                index = str(int(index) - 1)
                 self.lb.selection_set(first=index)
                 if widget != "listbox":
-                    self.lb.activate(index) 
+                    self.lb.activate(index)
 
     def down(self, widget):
         if self.lb_up:
@@ -117,10 +116,10 @@ class AutoCompleter(PlaceHolder):
                 index = '0'
             else:
                 index = self.lb.curselection()[0]
-                if int(index+1) != END:
+                if int(index + 1) != END:
                     self.lb.selection_clear(first=index)
-                    index = str(int(index+1))
-    
+                    index = str(int(index + 1))
+
             self.lb.selection_set(first=index)
             if widget != "listbox":
                 self.lb.activate(index)
@@ -131,7 +130,7 @@ class AutoCompleter(PlaceHolder):
         if results:
             self.lb.delete(0, END)
             for w in results:
-                self.lb.insert(END,w)
+                self.lb.insert(END, w)
 
             self.show_list(len(results))
         else:
@@ -143,7 +142,7 @@ class AutoCompleter(PlaceHolder):
         if not self.lb_up and self.parent.focus_get() is self:
             info = self.grid_info()
             if info:
-                self.lb.grid(row=int(info["row"])+1, columnspan=2)
+                self.lb.grid(row=int(info["row"]) + 1, columnspan=2)
                 self.lb_up = True
 
     def hide_list(self):
@@ -156,10 +155,10 @@ class AutoCompleter(PlaceHolder):
         if inp != self.placeholder and inp.__len__() >= 3:
             url = "https://spansh.co.uk/api/systems?"
             try:
-                results = requests.get(url, 
-                    params={'q': inp}, 
-                    headers={'User-Agent': "EDMC_SpanshRouter 1.0"},
-                    timeout=3)
+                results = requests.get(url,
+                                       params={'q': inp},
+                                       headers={'User-Agent': "EDMC_SpanshRouter 1.0"},
+                                       timeout=3)
 
                 lista = json.loads(results.content)
                 if lista:
@@ -171,7 +170,7 @@ class AutoCompleter(PlaceHolder):
 
     def write(self, lista):
         self.queue.put(lista)
-        
+
     def clear(self):
         self.queue.put(None)
 
@@ -184,7 +183,7 @@ class AutoCompleter(PlaceHolder):
         except queue.Empty:
             pass
         self.after(100, self.update_me)
-    
+
     def set_text(self, text, placeholder_style=True):
         if placeholder_style:
             self['fg'] = self.placeholder_color
@@ -199,6 +198,7 @@ class AutoCompleter(PlaceHolder):
             self.delete(0, END)
             self.insert(0, text)
             self.var.traceid = self.var.trace('w', self.changed)
+
 
 if __name__ == '__main__':
     root = Tk()

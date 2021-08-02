@@ -1,5 +1,7 @@
-from config import config
 from tkinter import Entry, END, StringVar
+
+from config import config
+
 
 class PlaceHolder(Entry):
     def __init__(self, parent, placeholder, **kw):

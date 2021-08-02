@@ -1,17 +1,20 @@
-import sys
-from SpanshRouter.SpanshRouter import SpanshRouter
 import tkinter.messagebox as confirmDialog
+
+from SpanshRouter.SpanshRouter import SpanshRouter
 
 spansh_router = None
 
+
 def plugin_start3(plugin_dir):
     return plugin_start(plugin_dir)
+
 
 def plugin_start(plugin_dir):
     global spansh_router
     spansh_router = SpanshRouter(plugin_dir)
     spansh_router.check_for_update()
     return 'SpanshRouter'
+
 
 def plugin_stop():
     global spansh_router
@@ -20,14 +23,16 @@ def plugin_stop():
     if spansh_router.update_available:
         spansh_router.install_update()
 
+
 def journal_entry(cmdr, is_beta, system, station, entry, state):
     global spansh_router
-    if (    entry['event'] in ['FSDJump', 'Location', 'SupercruiseEntry', 'SupercruiseExit'] 
+    if (entry['event'] in ['FSDJump', 'Location', 'SupercruiseEntry', 'SupercruiseExit']
             and entry["StarSystem"].lower() == spansh_router.next_stop.lower()):
         spansh_router.update_route()
         spansh_router.set_source_ac(entry["StarSystem"])
     elif entry['event'] == 'FSSDiscoveryScan' and entry['SystemName'] == spansh_router.next_stop:
         spansh_router.update_route()
+
 
 def ask_for_update():
     global spansh_router
@@ -42,6 +47,7 @@ def ask_for_update():
             confirmDialog.showinfo("SpanshRouter", "The update will be installed as soon as you quit EDMC.")
         else:
             spansh_router.update_available = False
+
 
 def plugin_app(parent):
     global spansh_router

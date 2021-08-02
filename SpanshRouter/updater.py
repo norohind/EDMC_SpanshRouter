@@ -1,11 +1,12 @@
+import json
+import logging
 import os
-import requests
-import zipfile
 import sys
 import traceback
-import json
+import zipfile
 
-import logging
+import requests
+
 from config import appname
 
 # We need a name of plugin dir, not SpanshRouter.py dir
