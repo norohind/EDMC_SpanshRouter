@@ -832,6 +832,7 @@ class SpanshRouter():
                 logger.warning(''.join('!! ' + line for line in lines))
 
     def check_for_update(self):
+        return  # Autoupdates is disabled
         self.cleanup_old_version()
         version_url = "https://raw.githubusercontent.com/CMDR-Kiel42/EDMC_SpanshRouter/master/version.json"
         try:
