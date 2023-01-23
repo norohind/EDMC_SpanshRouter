@@ -1,4 +1,9 @@
 # EDMC_SpanshRouter
+## Note on norohind's fork
+This is fork where I try to maintain working version of SpanshRouter
+plugin for personal use with the latest version of EDMarketConnector.  
+I'm not trying to maintain README.md, CHANGELOG.md and auto-update system
+of the plugin, at least now.
 
 This plugin's purpose is to automatically copy to your clipboard the next waypoint on a route you planned using [Spansh](https://www.spansh.co.uk/plotter).
 
