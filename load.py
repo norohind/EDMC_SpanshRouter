@@ -51,6 +51,7 @@ def ask_for_update():
 
 def plugin_app(parent):
     global spansh_router
-    spansh_router.init_gui(parent)
+    frame = spansh_router.init_gui(parent)
     spansh_router.open_last_route()
     parent.master.after_idle(ask_for_update)
+    return frame
