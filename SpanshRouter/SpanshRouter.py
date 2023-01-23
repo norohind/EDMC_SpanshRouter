@@ -160,7 +160,7 @@ class SpanshRouter():
             self.csv_route_btn.grid_remove()
             self.source_ac.grid()
             # Prefill the "Source" entry with the current system
-            self.source_ac.set_text(monitor.system if monitor.system is not None else "Source System", monitor.system is None)
+            self.source_ac.set_text(monitor.state['SystemName'] if monitor.state['SystemName'] is not None else "Source System", monitor.state['SystemName'] is None)
             self.dest_ac.grid()
             self.range_entry.grid()
             self.efficiency_slider.grid()
@@ -597,7 +597,7 @@ class SpanshRouter():
                                 self.jumps_left += waypoint["jumps"]
                             self.enable_plot_gui(True)
                             self.show_plot_gui(False)
-                            self.offset = 1 if self.route[0][0] == monitor.system else 0
+                            self.offset = 1 if self.route[0][0] == monitor.state['SystemName'] else 0
                             self.next_stop = self.route[self.offset][0]
                             self.copy_waypoint()
                             self.update_gui()
