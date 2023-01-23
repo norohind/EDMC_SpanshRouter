@@ -4,7 +4,9 @@ import io
 import json
 import logging
 import os
+import re
 import subprocess
+import sys
 import tkinter as tk
 import tkinter.filedialog as filedialog
 import tkinter.messagebox as confirmDialog
@@ -14,11 +16,10 @@ from time import sleep
 from tkinter import *
 
 import requests
-
 from config import appname
 from monitor import monitor
-from . import AutoCompleter
-from . import PlaceHolder
+
+from . import AutoCompleter, PlaceHolder
 from .updater import SpanshUpdater
 
 # We need a name of plugin dir, not SpanshRouter.py dir
