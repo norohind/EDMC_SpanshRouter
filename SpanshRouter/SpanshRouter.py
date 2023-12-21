@@ -321,10 +321,11 @@ class SpanshRouter():
             self.jumps_left = 0
             for row in self.route[self.offset:]:
                 if row[1] not in [None, "", []]:
-                if not self.galaxy: # galaxy type doesn't have a jumps column
-                    self.jumps_left += int(row[1])
-                else:
-                    self.jumps_left += 1
+                    if not self.galaxy: # galaxy type doesn't have a jumps column
+
+                        self.jumps_left += int(row[1])
+                    else:
+                        self.jumps_left += 1
                     
 
             self.next_stop = self.route[self.offset][0]
