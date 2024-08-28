@@ -452,7 +452,7 @@ class SpanshRouter():
             # Define the differnt import file formats based on the CSV header row
             neutronimportheader = "System Name,Distance To Arrival,Distance Remaining,Neutron Star,Jumps"
             road2richesimportheader = "System Name,Body Name,Body Subtype,Is Terraformable,Distance To Arrival,Estimated Scan Value,Estimated Mapping Value,Jumps"
-            fleetcarrierimportheader = "System Name,Distance,Distance Remaining,Fuel Used,Icy Ring,Pristine,Restock Tritium"
+            fleetcarrierimportheader = "System Name,Distance,Distance Remaining,Tritium in tank,Tritium in market,Fuel Used,Icy Ring,Pristine,Restock Tritium"
             galaxyimportheader = "System Name,Distance,Distance Remaining,Fuel Left,Fuel Used,Refuel,Neutron Star"
 
             if (headerline == internalbasicheader1) or (headerline == internalbasicheader2) or (headerline == neutronimportheader):
