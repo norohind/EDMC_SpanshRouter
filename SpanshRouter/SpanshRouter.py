@@ -341,13 +341,9 @@ class SpanshRouter():
             logger.warning(''.join('!! ' + line for line in lines))
 
     def copy_waypoint(self):
-        if sys.platform == "linux" or sys.platform == "linux2":
-            command = subprocess.Popen(["echo", "-n", self.next_stop], stdout=subprocess.PIPE)
-            subprocess.Popen(["xclip", "-selection", "c"], stdin=command.stdout)
-        else:
-            self.parent.clipboard_clear()
-            self.parent.clipboard_append(self.next_stop)
-            self.parent.update()
+        self.parent.clipboard_clear()
+        self.parent.clipboard_append(self.next_stop)
+        self.parent.update()
 
     def goto_next_waypoint(self):
         if self.offset < self.route.__len__()-1:
